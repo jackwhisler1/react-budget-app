@@ -1,8 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { v4 as uuidV4 } from "uuid";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const BudgetsContext = React.createContext();
+
+export const UNCATEGORIZED_BUDGET_ID = "Uncategorized"
 
 export function useBudgets() {
   return useContext(BudgetsContext);
@@ -19,8 +21,8 @@ export const BudgetsProvider = ({ children }) => {
   }
 
   // Returns expenses with id matching budgetId
-  function getBudgetExpense(budgetId) {
-    return expenses.filter((expense) => expense.budgetId === budgetId);
+  function getBudgetExpenses(budgetId) {
+    return expenses.filter((expense) => expense.description.budgetId === budgetId);
   }
 
   // Creates a budget if no matching budget name exists
@@ -54,13 +56,13 @@ export const BudgetsProvider = ({ children }) => {
         budgets,
         expenses,
         addExpense,
-        getBudgetExpense,
+        getBudgetExpenses,
         addBudget,
         deleteBudget,
         deleteExpense,
       }}
     >
-      {children}
+     {children}
     </BudgetsContext.Provider>
   );
 };
